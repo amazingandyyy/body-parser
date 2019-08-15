@@ -14,7 +14,9 @@ A simple body parser middleware for node-server or ExpressJS.
    </a>
 </p>
 
-> open source!
+> Zero dependency
+> less than 40 lines
+> compatible to ExpressJS
 
 ## Installation
 
