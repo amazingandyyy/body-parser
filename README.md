@@ -26,6 +26,8 @@ $ git clone git@github.com:amazingandyyy/body-parser.git
 
 ## Usage
 
+### ExpressJS
+
 ```javascript
 const express = require('express')
 const bodyParser = require('@amazingandyyy/body-parser')
@@ -40,6 +42,24 @@ app.post('/content', function (req, res) {
 
 app.listen(3000)
 ```
+
+### Node-Server
+
+```javascript
+const NodeServer = require('@amazingandyyy/node-server')
+const nodeServerParser = require('@amazingandyyy/body-parser');
+
+const app = new NodeServer()
+app.use(nodeServerParser)
+app.on('post', '/content', (req, res)=>{
+   console.log(req.body)
+   res.send(req.body)
+})
+
+app.start({ port: 4000 })
+
+```
+
 
 ## License
 
