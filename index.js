@@ -1,30 +1,42 @@
-#!/usr/bin/env node
-const fs = require('fs')
-const path = require('path')
-const { spawn } = require('child_process')
+const FORM_URLENCODED = 'application/x-www-form-urlencoded'
+const FORM_JSON = 'application/json'
+const FORM_DATA = 'multipart/form-data'
+const { RequestMethods } = require('./constants')
+const qs = require('./querystring')
 
-const cwd = process.cwd()
-const target = process.argv[2] || require(path.resolve(cwd, 'package.json')).main
-const file = path.resolve(cwd, target)
-
-let session = launch()
-
-function launch () {
-  console.log(`\x1b[32m[node-run] node ${target}`, '\x1b[0m')
-  const session = spawn('node', [file])
-  session.stdout.pipe(process.stdout)
-  session.stderr.pipe(process.stderr)
-  return session
+const bodyParser = (req, res, next) => {
+  if (req.method.toString() === RequestMethods.PUT || req.method.toString() === RequestMethods.POST) {
+    if (req.headers['content-type'].includes(FORM_URLENCODED)) {
+      let body = ''
+      req.on('data', chunk => {
+        body += chunk.toString()
+      })
+      req.on('end', () => {
+        req.body = qs.parse(body)
+        next()
+      })
+    } else if (req.headers['content-type'].includes(FORM_JSON)) {
+      let body = ''
+      req.on('data', chunk => {
+        body += chunk.toString()
+      })
+      req.on('end', () => {
+        req.body = JSON.parse(body)
+        next()
+      })
+    } else if (req.headers['content-type'].includes(FORM_DATA)) {
+      next(`Doesn't support ${FORM_DATA} yet.`)
+    } else {
+      let body = ''
+      req.on('data', chunk => {
+        body += chunk.toString()
+      })
+      req.on('end', () => {
+        req.body = JSON.parse(body)
+        next()
+      })
+    }
+  }
 }
 
-process.on('SIGINT', () => {
-  console.log('\n[node-run] exits')
-  process.exit()
-})
-
-fs.watch(cwd, (curr, filename) => {
-  if (filename.indexOf('node_module') < 0) {
-    session.kill('SIGINT')
-    session = launch()
-  }
-})
+module.exports = bodyParser
