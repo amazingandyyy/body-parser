@@ -1,5 +1,5 @@
 <h1 align="center">
-🏃 body-parser
+👷 body-parser
 </h1>
 <p align="center">
 A simple body parser middleware for node-server or ExpressJS.
