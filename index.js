@@ -2,7 +2,7 @@ const FORM_URLENCODED = 'application/x-www-form-urlencoded'
 const FORM_JSON = 'application/json'
 const FORM_DATA = 'multipart/form-data'
 const { RequestMethods } = require('./constants')
-const qs = require('./querystring')
+const qs = require('querystring');
 
 const bodyParser = (req, res, next) => {
   if (req.method.toString() === RequestMethods.PUT || req.method.toString() === RequestMethods.POST) {
