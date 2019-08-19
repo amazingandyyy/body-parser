@@ -12,6 +12,9 @@ A simple body parser middleware for node-server or ExpressJS.
    <a href="https://circleci.com/gh/amazingandyyy/body-parser">
       <img src="https://circleci.com/gh/amazingandyyy/body-parser.svg?style=svg" />
    </a>
+   <a href="https://www.npmjs.com/package/@amazingandyyy/body-parser">
+      <img src="https://badge.fury.io/js/%40amazingandyyy%2Fbody-parser.svg" />
+   </a>
 </p>
 
 > Zero dependency
